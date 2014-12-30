@@ -8,35 +8,38 @@ require 'pry'
 #     =>  S beats P but not R
 # 4. Declare the winner and prompt to play again or end
 
-# let the computer take a turn
-def computer_play
-  ["R","P","S"][rand(3)]
-end
 
-# reformat the screen for the next step
+# eliminate clutter on the interface
 def header
   system("clear")
   puts "Let's play Rock, Paper, Scissors"
   puts "--------------------------------"
 end
 
-# ask the user go play again or not
-def play_again?
-  again = validate_input "Would you like to go again? (Y/N)", :again
-  again.upcase!
-  
-  again == "Y" ? play_game : (puts "Thanks for playing!")
-end
-
 # group the logic that encompasses a full round of the game
 def play_game
   header
   user = validate_input "Choose a Play (R/P/S)", :play
-  computer = computer_play
+  computer = ["R","P","S"][rand(3)]
   
+  # determine who won this round
   header
-  winner user, computer
-  play_again?
+  string = case user
+      when computer
+        "It's a TIE!!!"
+      when "P"
+        computer == "R" ? "Paper covers rock! YOU WIN!" : "Scissors cut paper! Computer Wins!"
+      when "R"
+        computer == "S" ? "Rock breaks scissors! YOU WIN!" : "Paper covers Rock! Computer Wins!"
+      when "S"
+        computer == "P" ? "Scissors cut paper! YOU WIN!" : "Rock breaks scissors! Computer Wins!"
+    end
+  puts string
+  
+  # ask the user if they wish to play again
+  again = validate_input "Would you like to go again? (Y/N)", :again
+  again.upcase!
+  again == "Y" ? play_game : (puts "Thanks for playing!")
 end
 
 # as the user a question and return the result
@@ -73,21 +76,6 @@ def valid?(input, type)
   end
 end
 
-# determine the winner and print out the result
-def winner(user, comp)
-  string = case user
-      when comp
-        "It's a TIE!!!"
-      when "P"
-        comp == "R" ? "Paper covers rock! YOU WIN!" : "Scissors cut paper! Computer Wins!"
-      when "R"
-        comp == "S" ? "Rock breaks scissors! YOU WIN!" : "Paper covers Rock! Computer Wins!"
-      when "S"
-        comp == "P" ? "Scissors cut paper! YOU WIN!" : "Rock breaks scissors! Computer Wins!"
-    end
-  puts string
-end
 
-
-
+# begin the game
 play_game
