@@ -76,6 +76,8 @@ end
 # determine the winner and print out the result
 def winner(user, comp)
   string = case user
+      when comp
+        "It's a TIE!!!"
       when "P"
         comp == "R" ? "User Wins!" : "Computer Wins!"
       when "R"
