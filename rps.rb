@@ -8,16 +8,19 @@ require 'pry'
 #     =>  S beats P but not R
 # 4. Declare the winner and prompt to play again or end
 
+# let the computer take a turn
 def computer_play
   ["R","P","S"][rand(3)]
 end
 
+# reformat the screen for the next step
 def header
   system("clear")
   puts "Let's play Rock, Paper, Scissors"
   puts "--------------------------------"
 end
 
+# ask the user go play again or not
 def play_again?
   again = validate_input "Would you like to go again? (Y/N)", :again
   again.upcase!
@@ -25,6 +28,7 @@ def play_again?
   again == "Y" ? play_game : (puts "Thanks for playing!")
 end
 
+# group the logic that encompasses a full round of the game
 def play_game
   header
   user = validate_input "Choose a Play (R/P/S)", :play
@@ -35,12 +39,14 @@ def play_game
   play_again?
 end
 
+# as the user a question and return the result
 def prompt(msg)
   puts " => #{msg}"
   input = gets.chomp
   return input
 end
 
+# check that the input the user gave is valid. re-prompt repeatedly if not. return valid input
 def validate_input(msg, type)
   input = prompt msg
   good = false
@@ -58,6 +64,7 @@ def validate_input(msg, type)
   return input.upcase
 end
 
+# set the qualifications of valid input by category
 def valid?(input, type)
   if type == :play
     !(input !~ /[RPSrps]/) && input.length == 1
@@ -66,6 +73,7 @@ def valid?(input, type)
   end
 end
 
+# determine the winner and print out the result
 def winner(user, comp)
   string = case user
       when "P"
