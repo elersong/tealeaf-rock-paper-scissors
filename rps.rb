@@ -46,7 +46,7 @@ def validate_input(msg, type)
   good = false
   
   while good == false
-    if valid_play?(input, type)
+    if valid?(input, type)
       good = true
     else
       system("clear")
@@ -58,7 +58,7 @@ def validate_input(msg, type)
   return input.upcase
 end
 
-def valid_play?(input, type)
+def valid?(input, type)
   if type == :play
     !(input !~ /[RPSrps]/) && input.length == 1
   elsif type == :again
