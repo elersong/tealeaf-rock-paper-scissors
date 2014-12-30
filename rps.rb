@@ -18,18 +18,35 @@ def header
   puts "--------------------------------"
 end
 
+def play_again?
+  again = validate_input "Would you like to go again? (Y/N)", :again
+  again.upcase!
+  
+  again == "Y" ? play_game : (puts "Thanks for playing!")
+end
+
+def play_game
+  header
+  user = validate_input "Choose a Play (R/P/S)", :play
+  computer = computer_play
+  
+  header
+  winner user, computer
+  play_again?
+end
+
 def prompt(msg)
   puts " => #{msg}"
   input = gets.chomp
   return input
 end
 
-def validate_input(msg)
+def validate_input(msg, type)
   input = prompt msg
   good = false
   
   while good == false
-    if valid_play?(input)
+    if valid_play?(input, type)
       good = true
     else
       system("clear")
@@ -41,18 +58,26 @@ def validate_input(msg)
   return input.upcase
 end
 
-def valid_play?(input)
-  !(input !~ /[RPSrps]/) && input.length == 1
+def valid_play?(input, type)
+  if type == :play
+    !(input !~ /[RPSrps]/) && input.length == 1
+  elsif type == :again
+    !(input !~ /[YNyn]/)
+  end
+end
+
+def winner(user, comp)
+  string = case user
+      when "P"
+        comp == "R" ? "User Wins!" : "Computer Wins!"
+      when "R"
+        comp == "S" ? "User Wins!" : "Computer Wins!"
+      when "S"
+        comp == "P" ? "User Wins!" : "Computer Wins!"
+    end
+  puts string
 end
 
 
 
-# -------------------- Begin main logic
-
-header
-user = validate_input "Choose a Play (R/P/S)"
-computer = computer_play
-
-header
-
-
+play_game
