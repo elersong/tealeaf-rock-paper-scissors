@@ -8,18 +8,20 @@ require 'pry'
 #     =>  S beats P but not R
 # 4. Declare the winner and prompt to play again or end
 
-def prompt(msg)
-  puts " => #{msg}"
-  input = gets.chomp
-  return input
-end
-
 def computer_play
   ["R","P","S"][rand(3)]
 end
 
-def valid_play?(input)
-  !(input !~ /[RPSrps]/) && input.length == 1
+def header
+  system("clear")
+  puts "Let's play Rock, Paper, Scissors"
+  puts "--------------------------------"
+end
+
+def prompt(msg)
+  puts " => #{msg}"
+  input = gets.chomp
+  return input
 end
 
 def validate_input(msg)
@@ -28,11 +30,10 @@ def validate_input(msg)
   
   while good == false
     if valid_play?(input)
-      #binding.pry
       good = true
     else
-      #binding.pry
-      puts "INVALID INPUT"
+      system("clear")
+      puts "INVALID INPUT: Please try again"
       input = prompt msg
     end
   end
@@ -40,14 +41,18 @@ def validate_input(msg)
   return input.upcase
 end
 
+def valid_play?(input)
+  !(input !~ /[RPSrps]/) && input.length == 1
+end
+
+
+
 # -------------------- Begin main logic
 
-puts "Let's play Rock, Paper, Scissors"
-puts "--------------------------------"
+header
 user = validate_input "Choose a Play (R/P/S)"
-#binding.pry
 computer = computer_play
 
-puts "user: #{user}"
-puts "computer: #{computer}"
+header
+
 
