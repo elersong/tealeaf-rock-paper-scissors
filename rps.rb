@@ -37,7 +37,7 @@ def play_game
   puts string
   
   # ask the user if they wish to play again
-  again = (collect_and_validate_input "Would you like to go again? (Y/N)", :again).upcase!
+  again = (collect_and_validate_input "Would you like to go again? (Y/N)", :again).upcase
   again == "Y" ? play_game : (puts "Thanks for playing!")
 end
 
