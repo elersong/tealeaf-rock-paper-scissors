@@ -79,11 +79,11 @@ def winner(user, comp)
       when comp
         "It's a TIE!!!"
       when "P"
-        comp == "R" ? "User Wins!" : "Computer Wins!"
+        comp == "R" ? "Paper covers rock! User Wins!" : "Scissors cut paper! Computer Wins!"
       when "R"
-        comp == "S" ? "User Wins!" : "Computer Wins!"
+        comp == "S" ? "Rock breaks scissors! User Wins!" : "Paper covers Rock! Computer Wins!"
       when "S"
-        comp == "P" ? "User Wins!" : "Computer Wins!"
+        comp == "P" ? "Scissors cut paper! User Wins!" : "Rock breaks scissors! Computer Wins!"
     end
   puts string
 end
