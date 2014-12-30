@@ -10,7 +10,7 @@ require 'pry'
 
 
 # eliminate clutter on the interface
-def header
+def display_header
   system("clear")
   puts "Let's play Rock, Paper, Scissors"
   puts "--------------------------------"
@@ -18,12 +18,12 @@ end
 
 # group the logic that encompasses a full round of the game
 def play_game
-  header
-  user = validate_input "Choose a Play (R/P/S)", :play
-  computer = ["R","P","S"][rand(3)]
+  display_header
+  user = collect_and_validate_input "Choose a Play (R/P/S)", :play
+  computer = %w(R P S).sample
   
   # determine who won this round
-  header
+  display_header
   string = case user
       when computer
         "It's a TIE!!!"
@@ -37,7 +37,7 @@ def play_game
   puts string
   
   # ask the user if they wish to play again
-  again = validate_input "Would you like to go again? (Y/N)", :again
+  again = collect_and_validate_input "Would you like to go again? (Y/N)", :again
   again.upcase!
   again == "Y" ? play_game : (puts "Thanks for playing!")
 end
@@ -45,26 +45,21 @@ end
 # as the user a question and return the result
 def prompt(msg)
   puts " => #{msg}"
-  input = gets.chomp
-  return input
+  gets.chomp
 end
 
 # check that the input the user gave is valid. re-prompt repeatedly if not. return valid input
-def validate_input(msg, type)
+def collect_and_validate_input(msg, type)
   input = prompt msg
-  good = false
   
-  while good == false
     if valid?(input, type)
-      good = true
+      return input.upcase
     else
       system("clear")
       puts "INVALID INPUT: Please try again"
-      input = prompt msg
+      input = collect_and_validate_input msg, type
     end
-  end
   
-  return input.upcase
 end
 
 # set the qualifications of valid input by category
