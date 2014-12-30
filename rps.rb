@@ -52,13 +52,13 @@ end
 def collect_and_validate_input(msg, type)
   input = prompt msg
   
-    if valid?(input, type)
-      return input.upcase
-    else
-      system("clear")
-      puts "INVALID INPUT: Please try again"
-      input = collect_and_validate_input msg, type
-    end
+  if valid?(input, type)
+    return input.upcase
+  else
+    system("clear")
+    puts "INVALID INPUT: Please try again"
+    input = collect_and_validate_input msg, type
+  end
   
 end
 
